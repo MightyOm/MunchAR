@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AR Fruit Eater</title>
+
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MediaPipe Face Mesh Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Native Webcam Feed as Background -->
+        <video id="webcam-video" autoplay playsinline></video>
+
+        <!-- Canvas for rendering fruits and tracking debug -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- 2D UI Layer -->
+        <div id="ui-layer">
+            <header class="glass-panel">
+                <div class="stat-box">
+                    <span class="stat-icon">🍎</span>
+                    <span id="score-display">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-icon">⏱️</span>
+                    <span id="time-display">60</span>s
+                </div>
+            </header>
+        </div>
+
+        <!-- UI Overlay (Start / Loading / Game Over) -->
+        <div id="overlay-screen">
+            <div class="glass-panel modal">
+                <h1 id="modal-title">AR Fruit Eater</h1>
+                <div id="instructions" class="hidden">
+                    <div class="instruction-item">
+                        <span class="icon">🍎</span>
+                        <span>Tilt your head and open your mouth to eat fruits!</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="icon">💣</span>
+                        <span>Avoid bombs! Eating one reduces 5 seconds.</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="icon">⏱️</span>
+                        <span>You have 1 minute. Eat as many fruits as possible!</span>
+                    </div>
+                </div>
+                <p id="modal-desc">Loading Face Tracking... Please ensure your face is well-lit.</p>
+                <div class="loader" id="loading-spinner"></div>
+                <button class="btn hidden" id="start-btn">PLAY NOW</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to external game logic JS -->
+    <script src="game.js"></script>
+</body>
+
+</html>

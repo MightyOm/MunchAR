@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+:root {
+    --primary: #ff4757;
+    --surface: rgba(255, 255, 255, 0.15);
+    --text: #ffffff;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background-color: #1a1a1a;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* The Webcam Feed and overlapping game canvas */
+#webcam-video,
+#game-canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Both cover the same area identically */
+    transform: translate(-50%, -50%) scaleX(-1);
+    /* Mirror both */
+}
+
+/* Canvas needs to sit on top of video */
+#game-canvas {
+    z-index: 5;
+    pointer-events: none;
+}
+
+#webcam-video {
+    z-index: 1;
+}
+
+/* Main UI Layer */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Glassmorphism Panel styles */
+.glass-panel {
+    background: var(--surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    margin: 20px;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.stat-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.stat-icon {
+    font-size: 1.8rem;
+}
+
+/* Overlay */
+#overlay-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    transition: opacity 0.5s ease;
+    z-index: 200;
+}
+
+.modal {
+    padding: 30px 40px;
+    text-align: center;
+    max-width: 450px;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+#instructions {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+    width: 100%;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 12px 15px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    line-height: 1.4;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instruction-item:last-child {
+    margin-bottom: 0;
+}
+
+.instruction-item .icon {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+h1 {
+    margin: 0 0 10px 0;
+    font-weight: 900;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #ff6b81, #ff4757);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.btn {
+    background: linear-gradient(45deg, #ff4757, #ff6b81);
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(255, 71, 87, 0.6);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Loading Spinner */
+.loader {
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
